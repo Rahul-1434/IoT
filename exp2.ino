@@ -1,6 +1,5 @@
 #include <LiquidCrystal_I2C.h>
-
-LiquidCrystal_I2C lcd(0x3F, 16, 2);
+LiquidCrystal_I2C lcd(0x3F, 16, 2); 
 
 #define trigPin 23
 #define echoPin 39
@@ -23,35 +22,15 @@ void loop() {
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH, 30000);
-
-  if (duration == 0) {
-    distance = -1;
-  } else {
-    distance = duration * 0.034 / 2;
-  }
-
-  Serial.print("Distance: ");
-  if (distance == -1) {
-    Serial.println("Out of range");
-  } else {
-    Serial.print(distance);
-    Serial.println(" cm");
-  }
-
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration * 0.0344 / 2;
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Distance:");
-
-  if (distance == -1) {
-    lcd.setCursor(9, 0);
-    lcd.print("Out of range");
-  } else {
-    lcd.setCursor(9, 0);
-    lcd.print(distance);
-    lcd.setCursor(13, 0);
-    lcd.print("CM");
-  }
-
-  delay(500);
+  lcd.print("Distance: ");
+  lcd.print(distance);
+  lcd.print(" cm");
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+  delay(500);  
 }
